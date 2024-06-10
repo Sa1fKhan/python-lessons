@@ -142,8 +142,8 @@ def draw_objects():
     # Draw the ball
     pygame.draw.circle(screen, RED, (ball_x, ball_y), 10)
     # Draw the scores
-    draw_text(str(scoreL), 275, 50)
-    draw_text(str(scoreR), 325, 50)
+    draw_text(str(scoreL), 150, 50)
+    draw_text(str(scoreR), 450, 50)
     pygame.display.update()  # Update the display with the new drawings
 
 def draw_text(text, x, y):
