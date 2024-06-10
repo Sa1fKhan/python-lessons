@@ -104,13 +104,15 @@ def update_ball_position():
     if ball_y <= 0 or ball_y >= 600:
         ball_speed_y *= -1  # Reverse the vertical direction
 
-    # Ball collision with left paddle
-    if (ball_x <= 100 and paddleL_currYPos <= ball_y <= paddleL_currYPos + 100):
-        ball_speed_x *= -1  # Reverse the horizontal direction
+    # Ball collision with left paddle only if it's on the right side of the paddle
+    if (ball_x <= 100 and ball_x >= 95):
+        if (paddleL_currYPos <= ball_y <= paddleL_currYPos + 100):
+            ball_speed_x *= -1  # Reverse the horizontal direction
 
-    # Ball collision with right paddle
-    if (ball_x >= 500 and paddleR_currYPos <= ball_y <= paddleR_currYPos + 100):
-        ball_speed_x *= -1  # Reverse the horizontal direction
+    # Ball collision with right paddle only if it's on the left side of the paddle
+    if (ball_x >= 500 and ball_x <= 505):
+        if (paddleR_currYPos <= ball_y <= paddleR_currYPos + 100):
+            ball_speed_x *= -1  # Reverse the horizontal direction
 
     # Ball goes out of bounds on the left side
     if ball_x <= 0:
