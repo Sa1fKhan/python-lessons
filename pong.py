@@ -13,7 +13,8 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (50, 50, 255)
 GREEN = (50, 255, 50)
-
+BROWN = ( 255 , 98 , 0           ) 
+PINK = ( 255 , 0, 234          )
 # Set up the display
 screen = pygame.display.set_mode((600, 600))  # Create a window of size 600x600 pixels
 pygame.display.set_caption("PONG")  # Set the window title to "PONG"
@@ -138,9 +139,9 @@ def draw_objects():
     """
     screen.fill(BLACK)  # Fill the screen with black color to clear it
     # Draw the left paddle
-    pygame.draw.rect(screen, BLUE, (50, paddleL_currYPos, 50, 100))
+    pygame.draw.rect(screen, PINK, (50, paddleL_currYPos, 50, 100))
     # Draw the right paddle
-    pygame.draw.rect(screen, GREEN, (500, paddleR_currYPos, 50, 100))
+    pygame.draw.rect(screen, BROWN, (500, paddleR_currYPos, 50, 100))
     # Draw the ball
     pygame.draw.circle(screen, RED, (ball_x, ball_y), 10)
     # Draw the scores
