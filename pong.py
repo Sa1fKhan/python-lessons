@@ -147,6 +147,10 @@ def draw_objects():
     # Draw the scores
     draw_text(str(scoreL), 150, 50)
     draw_text(str(scoreR), 450, 50)
+    
+    # Draw the timer
+    draw_text("00:00", 250, 50)
+    
     pygame.display.update()  # Update the display with the new drawings
 
 def draw_text(text, x, y):
