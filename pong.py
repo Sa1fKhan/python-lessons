@@ -7,6 +7,10 @@ pygame.init()  # Initializes all the Pygame modules
 clock = pygame.time.Clock()  # Create a Clock object to manage the frame rate
 fps = 60  # Frames per second, the speed at which the game updates
 
+# Timer settings
+countdown_time = 10  # countdown from 10 seconds
+start_ticks = pygame.time.get_ticks()  # get start ticks
+
 # Define colors using RGB values
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -149,7 +153,8 @@ def draw_objects():
     draw_text(str(scoreR), 450, 50)
     
     # Draw the timer
-    draw_text("start", 250, 200)
+    countdown_text = get_countdown_time()
+    draw_text(str(countdown_text), 250, 200)
     
     pygame.display.update()  # Update the display with the new drawings
 
@@ -161,15 +166,33 @@ def draw_text(text, x, y):
     text = font.render(text, True, WHITE)  # Render the text
     screen.blit(text, (x, y))  # Draw the text on the screen
 
+def get_countdown_time():
+    # Calculate the elapsed milliseconds since the countdown started
+    elapsed_ticks = pygame.time.get_ticks() - start_ticks
+    
+    # Convert elapsed milliseconds to seconds
+    elapsed_seconds = elapsed_ticks // 1000
+    
+    # Calculate the current countdown time in seconds
+    current_seconds = countdown_time - elapsed_seconds
+
+    # Check if the countdown is finished
+    if current_seconds < 0:
+        current_seconds = 0
+        
+    return current_seconds
+
+"""
+This is the main function that runs the game loop.
+"""
 def main():
-    """
-    This is the main function that runs the game loop.
-    """
     while True:  # Infinite loop to keep the game running
         handle_events()  # Handle user input and events
         update_paddle_position()  # Update paddle positions based on input
         update_ball_position()  # Update ball position and handle collisions
+
         draw_objects()  # Draw the updated game objects on the screen
+
         clock.tick(fps)  # Ensure the game runs at the specified frame rate
 
 if __name__ == "__main__":
