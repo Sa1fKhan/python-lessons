@@ -17,8 +17,9 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLUE = (50, 50, 255)
 GREEN = (50, 255, 50)
-BROWN = ( 255 , 98 , 0           ) 
-PINK = ( 255 , 0, 234          )
+BROWN = (255, 98, 0)
+PINK = (255, 0, 234)
+
 # Set up the display
 screen = pygame.display.set_mode((600, 600))  # Create a window of size 600x600 pixels
 pygame.display.set_caption("PONG")  # Set the window title to "PONG"
@@ -44,6 +45,7 @@ ball_speed_y = 5  # Speed of the ball in Y direction
 scoreL = 0  # Score for the left player
 scoreR = 0  # Score for the right player
 
+
 def handle_events():
     """
     This function handles all the events, like key presses and window closing.
@@ -55,6 +57,7 @@ def handle_events():
             sys.exit()  # Exit the program
 
         if event.type == pygame.KEYDOWN:  # Check if a key is pressed down
+            print(str(event.key))
             if event.key == pygame.K_UP:  # If the UP arrow key is pressed
                 paddleR_currSpeed = -10  # Move the right paddle up
             elif event.key == pygame.K_DOWN:  # If the DOWN arrow key is pressed
@@ -69,6 +72,7 @@ def handle_events():
                 paddleR_currSpeed = 0  # Stop the right paddle
             if event.key == pygame.K_w or event.key == pygame.K_s:
                 paddleL_currSpeed = 0  # Stop the left paddle
+
 
 def update_paddle_position():
     """
@@ -95,6 +99,7 @@ def update_paddle_position():
         paddleR_currYPos = paddle_maxYPos - 1  # Set it slightly inside the boundary
         paddleR_currSpeed = 0  # Stop the paddle
 
+
 def update_ball_position():
     """
     This function updates the position of the ball and handles collisions.
@@ -110,13 +115,13 @@ def update_ball_position():
         ball_speed_y *= -1  # Reverse the vertical direction
 
     # Ball collision with left paddle only if it's on the right side of the paddle
-    if (ball_x <= 100 and ball_x >= 95):
-        if (paddleL_currYPos <= ball_y <= paddleL_currYPos + 100):
+    if ball_x <= 100 and ball_x >= 95:
+        if paddleL_currYPos <= ball_y <= paddleL_currYPos + 100:
             ball_speed_x *= -1  # Reverse the horizontal direction
 
     # Ball collision with right paddle only if it's on the left side of the paddle
-    if (ball_x >= 500 and ball_x <= 505):
-        if (paddleR_currYPos <= ball_y <= paddleR_currYPos + 100):
+    if ball_x >= 500 and ball_x <= 505:
+        if paddleR_currYPos <= ball_y <= paddleR_currYPos + 100:
             ball_speed_x *= -1  # Reverse the horizontal direction
 
     # Ball goes out of bounds on the left side
@@ -129,6 +134,7 @@ def update_ball_position():
         scoreL += 1  # Increment the left player's score
         reset_ball()  # Reset the ball position
 
+
 def reset_ball():
     """
     This function resets the ball to the center of the screen.
@@ -136,6 +142,7 @@ def reset_ball():
     global ball_x, ball_y, ball_speed_x, ball_speed_y
     ball_x, ball_y = 300, 300  # Reset ball to the center
     ball_speed_x *= -1  # Change direction to serve to the other player
+
 
 def draw_objects():
     """
@@ -151,12 +158,13 @@ def draw_objects():
     # Draw the scores
     draw_text(str(scoreL), 150, 50)
     draw_text(str(scoreR), 450, 50)
-    
+
     # Draw the timer
     countdown_text = get_countdown_time()
     draw_text(str(countdown_text), 250, 200)
-    
+
     pygame.display.update()  # Update the display with the new drawings
+
 
 def draw_text(text, x, y):
     """
@@ -166,25 +174,29 @@ def draw_text(text, x, y):
     text = font.render(text, True, WHITE)  # Render the text
     screen.blit(text, (x, y))  # Draw the text on the screen
 
+
 def get_countdown_time():
     # Calculate the elapsed milliseconds since the countdown started
     elapsed_ticks = pygame.time.get_ticks() - start_ticks
-    
+
     # Convert elapsed milliseconds to seconds
     elapsed_seconds = elapsed_ticks // 1000
-    
+
     # Calculate the current countdown time in seconds
     current_seconds = countdown_time - elapsed_seconds
 
     # Check if the countdown is finished
     if current_seconds < 0:
         current_seconds = 0
-        
+
     return current_seconds
+
 
 """
 This is the main function that runs the game loop.
 """
+
+
 def main():
     while True:  # Infinite loop to keep the game running
         handle_events()  # Handle user input and events
@@ -194,6 +206,12 @@ def main():
         draw_objects()  # Draw the updated game objects on the screen
 
         clock.tick(fps)  # Ensure the game runs at the specified frame rate
+
+        if scoreL >= 10:
+            print("L player wins!")
+        elif scoreR >= 10:
+            print("R player wins!")
+
 
 if __name__ == "__main__":
     main()  # Call the main function to start the game
