@@ -53,7 +53,7 @@ ball_image = pygame.transform.scale(
     ball_image, (20, 20)
 )  # Scale the image to the desired size
 
-field_image = pygame.image.load("./images/soccer-field.png")
+field_image = pygame.image.load("./duck0.jpg")
 field_image = pygame.transform.rotate(field_image, 90)
 
 
