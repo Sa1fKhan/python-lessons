@@ -21,17 +21,19 @@ BROWN = (255, 98, 0)
 PINK = (255, 0, 234)
 
 # Set up the display
-screen = pygame.display.set_mode((599, 396))
+screen = pygame.display.set_mode((600, 400))
 pygame.display.set_caption("PONG")  # Set the window title to "PONG"
 
 # Define paddle boundaries
 paddle_minYPos = 0  # Minimum Y position for the paddles
 paddle_maxYPos = 396  # Maximum Y position for the paddles
 
+paddle_width = 50
+paddle_height = 100
+
 # Initialize paddle positions and speeds
 paddleL_currYPos = 300  # Initial Y position of the left paddle
 paddleL_currSpeed = 0  # Initial speed of the left paddle
-
 paddleR_currYPos = 300  # Initial Y position of the right paddle
 paddleR_currSpeed = 0  # Initial speed of the right paddle
 
@@ -57,10 +59,10 @@ field_image = pygame.image.load("./images/soccer-field.png")
 field_image = pygame.transform.rotate(field_image, 90)
 
 p1_image = pygame.image.load("./images/messi.jpeg")
-p1_image = pygame.transform.scale(p1_image, (200, 200))
+p1_image = pygame.transform.scale(p1_image, (paddle_height, paddle_height))
 
 p2_image = pygame.image.load("./images/ronaldo.jpg")
-p2_image = pygame.transform.scale(p2_image, (200, 200))
+p2_image = pygame.transform.scale(p2_image, (paddle_height, paddle_height))
 
 
 def handle_events():
@@ -135,12 +137,12 @@ def update_ball_position():
 
     # Ball collision with left paddle only if it's on the right side of the paddle
     if ball_x <= 100 and ball_x >= 95:
-        if paddleL_currYPos <= ball_y <= paddleL_currYPos + 100:
+        if paddleL_currYPos <= ball_y <= paddleL_currYPos + paddle_height:
             ball_speed_x *= -1  # Reverse the horizontal direction
 
     # Ball collision with right paddle only if it's on the left side of the paddle
     if ball_x >= 500 and ball_x <= 505:
-        if paddleR_currYPos <= ball_y <= paddleR_currYPos + 100:
+        if paddleR_currYPos <= ball_y <= paddleR_currYPos + paddle_height:
             ball_speed_x *= -1  # Reverse the horizontal direction
 
     # Ball goes out of bounds on the left side
@@ -173,12 +175,14 @@ def draw_objects():
     screen.blit(field_image, (0, 0))
 
     # Draw the left paddle
-    screen.blit(p1_image, (50, paddleL_currYPos, 50, 100))
-    pygame.draw.rect(screen, PINK, (50, paddleL_currYPos, 50, 200))
+    screen.blit(p1_image, (50, paddleL_currYPos, 50, paddle_height))
+    pygame.draw.rect(screen, PINK, (50, paddleL_currYPos, paddle_width, paddle_height))
 
     # Draw the right paddle
-    screen.blit(p2_image, (350, paddleR_currYPos, 50, 100))
-    pygame.draw.rect(screen, BROWN, (500, paddleR_currYPos, 50, 200))
+    screen.blit(p2_image, (500 - paddle_width, paddleR_currYPos, 50, paddle_height))
+    pygame.draw.rect(
+        screen, BROWN, (500, paddleR_currYPos, paddle_width, paddle_height)
+    )
 
     # Draw the ball
     pygame.draw.circle(screen, RED, (ball_x, ball_y), 10)
@@ -191,7 +195,7 @@ def draw_objects():
 
     # Draw the timer
     countdown_text = get_countdown_time()
-    draw_text(str(countdown_text), 250, 200)
+    draw_text(str(countdown_text), 250, 50)
 
     pygame.display.update()  # Update the display with the new drawings
 
