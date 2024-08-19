@@ -56,6 +56,9 @@ ball_image = pygame.transform.scale(
 field_image = pygame.image.load("./images/duck0.jpg")
 field_image = pygame.transform.rotate(field_image, 90)
 
+p1_image = pygame.image.load("./images/messi.jpeg")
+p2_image = pygame.image.load("./images/suuuuu.jpg")
+
 
 def handle_events():
     """
@@ -163,13 +166,17 @@ def draw_objects():
     """
     screen.fill(BLACK)  # Fill the screen with black color to clear it
 
-    # Draw the ball image
+    # Draw the field image
     screen.blit(field_image, (0, 0))
 
     # Draw the left paddle
     pygame.draw.rect(screen, PINK, (50, paddleL_currYPos, 50, 100))
+    screen.blit(p1_image, (50, paddleL_currYPos, 50, 100))
+
     # Draw the right paddle
     pygame.draw.rect(screen, BROWN, (500, paddleR_currYPos, 50, 100))
+    screen.blit(p2_image, (500, paddleR_currYPos, 50, 100))
+
     # Draw the ball
     pygame.draw.circle(screen, RED, (ball_x, ball_y), 10)
     # Draw the ball image
