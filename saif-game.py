@@ -53,11 +53,14 @@ ball_image = pygame.transform.scale(
     ball_image, (20, 20)
 )  # Scale the image to the desired size
 
-field_image = pygame.image.load("./images/duck0.jpg")
+field_image = pygame.image.load("./images/soccer-field.png")
 field_image = pygame.transform.rotate(field_image, 90)
 
 p1_image = pygame.image.load("./images/messi.jpeg")
-p2_image = pygame.image.load("./images/suuuuu.jpg")
+p1_image = pygame.transform.scale(p1_image, (200, 200))
+
+p2_image = pygame.image.load("./images/ronaldo.jpg")
+p2_image = pygame.transform.scale(p2_image, (200, 200))
 
 
 def handle_events():
@@ -170,12 +173,12 @@ def draw_objects():
     screen.blit(field_image, (0, 0))
 
     # Draw the left paddle
-    pygame.draw.rect(screen, PINK, (50, paddleL_currYPos, 50, 100))
     screen.blit(p1_image, (50, paddleL_currYPos, 50, 100))
+    pygame.draw.rect(screen, PINK, (50, paddleL_currYPos, 50, 200))
 
     # Draw the right paddle
-    pygame.draw.rect(screen, BROWN, (500, paddleR_currYPos, 50, 100))
-    screen.blit(p2_image, (500, paddleR_currYPos, 50, 100))
+    screen.blit(p2_image, (350, paddleR_currYPos, 50, 100))
+    pygame.draw.rect(screen, BROWN, (500, paddleR_currYPos, 50, 200))
 
     # Draw the ball
     pygame.draw.circle(screen, RED, (ball_x, ball_y), 10)
